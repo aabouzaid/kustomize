@@ -47,6 +47,16 @@ func (l *Loader) Config() *types.PluginConfig {
 	return l.pc
 }
 
+// Copy the actual values of pc instead using the pointer values.
+func (l *Loader) SetConfig() {
+	l.pc = &types.PluginConfig{
+		l.pc.PluginRestrictions,
+		l.pc.BpLoadingOptions,
+		l.pc.FnpLoadingOptions,
+		l.pc.HelmConfig,
+	}
+}
+
 // SetWorkDir sets the working directory for this loader's plugins
 func (l *Loader) SetWorkDir(wd string) {
 	l.pc.FnpLoadingOptions.WorkingDir = wd
