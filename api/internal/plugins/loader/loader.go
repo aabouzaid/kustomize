@@ -47,14 +47,16 @@ func (l *Loader) Config() *types.PluginConfig {
 	return l.pc
 }
 
-// Copy the actual values of pc instead using the pointer values.
-func (l *Loader) SetConfig() {
+// Copy the actual values of loader instead using the pointer values.
+func (l Loader) DeepCopy(ldr ifc.Loader) Loader {
 	l.pc = &types.PluginConfig{
-		l.pc.PluginRestrictions,
-		l.pc.BpLoadingOptions,
-		l.pc.FnpLoadingOptions,
-		l.pc.HelmConfig,
+		PluginRestrictions: l.pc.PluginRestrictions,
+		BpLoadingOptions:   l.pc.BpLoadingOptions,
+		FnpLoadingOptions:  l.pc.FnpLoadingOptions,
+		HelmConfig:         l.pc.HelmConfig,
 	}
+	l.SetWorkDir(ldr.Root())
+	return l
 }
 
 // SetWorkDir sets the working directory for this loader's plugins
